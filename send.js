@@ -32,7 +32,7 @@ function create_playlist(token){
 	  data() {
 	    return {
 	      client_id: 'a86e871995ea436391e918db90ecf7f9',
-	      scopes: 'user-top-read',
+	      scopes: 'playlist-modify-private,playlist-modify-public',
 	      redirect_uri: 'https://dicerandom.github.io/GenerateSpotifyPlaylistFromYoutube/',
 	      me: null
 	    }
