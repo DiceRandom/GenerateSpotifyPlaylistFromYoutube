@@ -1,0 +1,13 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="send.js"></script>
+
+
+<main id="app">
+  <template v-if="me">
+    <button @click="login">Login with Spotify</button>
+  </template>
+  <template v-else>
+    <button @click="login">Login with Spotify</button>
+  </template>
+</main>
