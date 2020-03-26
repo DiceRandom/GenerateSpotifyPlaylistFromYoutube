@@ -35,7 +35,7 @@ function create_playlist(){
 	    return {
 	      client_id: 'a86e871995ea436391e918db90ecf7f9',
 	      scopes: 'user-top-read',
-	      redirect_uri: 'https://open.spotify.com/collection/playlists',
+	      redirect_uri: 'https://dicerandom.github.io/GenerateSpotifyPlaylistFromYoutube/',
 	      me: null
 	    }
 	  },
