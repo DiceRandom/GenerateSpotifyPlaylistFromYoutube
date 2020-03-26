@@ -3,7 +3,7 @@ var uid = "i32v9nlxq9vi9rtbdhs5c5abn";
 var access_token = "A";
 var url = 'https://api.spotify.com/v1/users/{uid}/playlists'
 
-function create_playlist(){
+function create_playlist(token){
 
 
 
@@ -13,7 +13,7 @@ function create_playlist(){
 	   method: "POST",
 	   data: JSON.stringify({name: "tester!", description: "New playlist description", public: false}),
 	   headers: {
-	     'Authorization': 'Bearer ' + access_token,
+	     'Authorization': 'Bearer ' + token,
 	     'Content-Type': 'application/json',
 	     'Accept': 'application/json'
 	   },
@@ -43,7 +43,7 @@ function create_playlist(){
 	      
 	      window.spotifyCallback = (payload) => {
 	        alert(payload);
-	        create_playlist()
+	        create_playlist(payload)
 	        popup.close()
 	      }
 	    }
