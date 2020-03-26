@@ -45,7 +45,7 @@ function create_playlist(){
 	      
 	      window.spotifyCallback = (payload) => {
 	        alert(payload);
-	     
+	        create_playlist()
 	        popup.close()
 	      }
 	    }
@@ -55,7 +55,6 @@ function create_playlist(){
 	    
 	    if (access_token) {
 	      window.opener.spotifyCallback(access_token)
-	      create_playlist()
 	    }
 	  }
 	})
