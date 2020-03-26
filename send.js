@@ -54,7 +54,7 @@ function create_playlist(){
 	    access_token = window.location.hash.substr(1).split('&')[0].split("=")[1]
 	    
 	    if (access_token) {
-	      window.opener.spotifyCallback(this.access_token)
+	      window.opener.spotifyCallback(access_token)
 	      create_playlist()
 	    }
 	  }
