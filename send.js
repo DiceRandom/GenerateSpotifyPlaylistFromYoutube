@@ -11,7 +11,7 @@ function create_playlist(token){
 	$.ajax(url,{
 	   
 	   method: "POST",
-	   data: JSON.stringify({name: "tester!", description: "New playlist description", public: false}),
+	   data: JSON.stringify({name: "YT 2 SP", description: "Your New Playlist Awaits", public: false}),
 	   headers: {
 	     'Authorization': 'Bearer ' + token,
 	     'Content-Type': 'application/json',
