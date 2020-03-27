@@ -1,7 +1,7 @@
 window.onload = function () {
-var uid = "i32v9nlxq9vi9rtbdhs5c5abn";
+var uid = "";
 var access_token = "A";
-var url = 'https://api.spotify.com/v1/users/i32v9nlxq9vi9rtbdhs5c5abn/playlists'
+var url = 'https://api.spotify.com/v1/users//playlists'
 
 function create_playlist(token){
 
