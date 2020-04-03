@@ -41,7 +41,7 @@ function create_playlist(token){
 	   method: "POST",
 	   data: JSON.stringify({name: "YT 2 SP", description: "Your New Playlist Awaits", public: false}),
 	   headers: {
-	     'Authorization': 'Bearer ' + token,
+	     'Authorization': 'Bearer ' + window.localStorage.getItem('token'),
 	     'Content-Type': 'application/json',
 	     'Accept': 'application/json'
 	   },
@@ -70,6 +70,7 @@ const app = new Vue({
 		let popup = window.open(`https://accounts.spotify.com/authorize?client_id=${this.client_id}&response_type=token&redirect_uri=${this.redirect_uri}&scope=${this.scopes}&show_dialog=true`, 'Login with Spotify', 'width=800,height=600')
 		
 		window.spotifyCallback = (payload) => {
+		window.localStorage.setItem('token', payload);
 		alert(payload);
 		create_playlist(payload)
 		popup.close()
