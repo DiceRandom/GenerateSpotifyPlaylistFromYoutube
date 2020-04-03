@@ -1,17 +1,14 @@
-function updateUID(){
-	document.getElementById("uid").value = uid;
-	console.log(uid);
-}
-
-window.onload = function () {
 var uid = "";
 var access_token = "A";
 var _token = "0"
 var pl_url = 'https://api.spotify.com/v1/users/'+uid+'/playlists'
 var sg_url = 'https://api.spotify.com/v1/users/'+uid+'/playlists/tracks'
 
-updateUID();
 
+function updateUID(){
+	uid = document.getElementById("uid").value;
+	console.log(uid);
+}
 
 function addSong(){
 
@@ -54,34 +51,37 @@ function create_playlist(token){
 }
 
 
+function vuez(){
+const app = new Vue({
+	el: '#app',
+	data() {
+	return {
+		client_id: 'a86e871995ea436391e918db90ecf7f9',
+		scopes: 'playlist-modify-private,playlist-modify-public',
+		redirect_uri: 'https://dicerandom.github.io/GenerateSpotifyPlaylistFromYoutube/',
+		me: null
+	}
+	},
+	methods: {
+	login() {
+		let popup = window.open(`https://accounts.spotify.com/authorize?client_id=${this.client_id}&response_type=token&redirect_uri=${this.redirect_uri}&scope=${this.scopes}&show_dialog=true`, 'Login with Spotify', 'width=800,height=600')
+		
+		window.spotifyCallback = (payload) => {
+		alert(payload);
+		create_playlist(payload)
+		popup.close()
+		}
+	}
+	},
+	mounted() {
+	access_token = window.location.hash.substr(1).split('&')[0].split("=")[1]
+	
+	if (access_token) {
+		window.opener.spotifyCallback(access_token)
+	}
+	}
+})}
 
-	const app = new Vue({
-	  el: '#app',
-	  data() {
-	    return {
-	      client_id: 'a86e871995ea436391e918db90ecf7f9',
-	      scopes: 'playlist-modify-private,playlist-modify-public',
-	      redirect_uri: 'https://dicerandom.github.io/GenerateSpotifyPlaylistFromYoutube/',
-	      me: null
-	    }
-	  },
-	  methods: {
-	    login() {
-	      let popup = window.open(`https://accounts.spotify.com/authorize?client_id=${this.client_id}&response_type=token&redirect_uri=${this.redirect_uri}&scope=${this.scopes}&show_dialog=true`, 'Login with Spotify', 'width=800,height=600')
-	      
-	      window.spotifyCallback = (payload) => {
-	        alert(payload);
-	        create_playlist(payload)
-	        popup.close()
-	      }
-	    }
-	  },
-	  mounted() {
-	    access_token = window.location.hash.substr(1).split('&')[0].split("=")[1]
-	    
-	    if (access_token) {
-	      window.opener.spotifyCallback(access_token)
-	    }
-	  }
-	})
+window.onload = function () {
+	vuez();
 }
