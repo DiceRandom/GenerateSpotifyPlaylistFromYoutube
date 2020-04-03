@@ -15,6 +15,12 @@ function updateUID(){
 	console.log(uid);
 }
 
+function updateInfo(){
+	//PLAYLIST INFO
+	pName = document.getElementById("name").value;
+	pDescription = document.getElementById("description").value;
+}
+
 function addSong(){
 
 	$.ajax(sg_url,{
