@@ -84,4 +84,7 @@ const app = new Vue({
 
 window.onload = function () {
 	vuez();
+	updateUID();
+	pl_url = 'https://api.spotify.com/v1/users/'+uid+'/playlists'
+	sg_url = 'https://api.spotify.com/v1/users/'+uid+'/playlists/tracks'
 }
