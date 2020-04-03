@@ -5,8 +5,11 @@ var _token = "0"
 var pl_url = 'https://api.spotify.com/v1/users/'+uid+'/playlists'
 var sg_url = 'https://api.spotify.com/v1/users/'+uid+'/playlists/tracks'
 
+updateUID();
+
 function updateUID(){
 	document.getElementById("uid").value = uid;
+	console.log(uid);
 }
 
 function addSong(){
