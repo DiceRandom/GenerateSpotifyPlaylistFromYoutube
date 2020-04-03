@@ -3,6 +3,8 @@ var access_token = "A";
 var _token = "0"
 var pl_url = 'https://api.spotify.com/v1/users/'+uid+'/playlists'
 var sg_url = 'https://api.spotify.com/v1/users/'+uid+'/playlists/tracks'
+var pName = "YT 2 SP";
+var pDescription = "Your New Playlist Awaits";
 
 
 
@@ -39,7 +41,7 @@ function create_playlist(token){
 	$.ajax(pl_url,{
 	   
 	   method: "POST",
-	   data: JSON.stringify({name: "YT 2 SP", description: "Your New Playlist Awaits", public: false}),
+	   data: JSON.stringify({name: pName, description: pDescription, public: false}),
 	   headers: {
 	     'Authorization': 'Bearer ' + window.localStorage.getItem('token'),
 	     'Content-Type': 'application/json',
