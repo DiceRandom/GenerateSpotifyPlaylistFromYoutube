@@ -2,8 +2,8 @@ window.onload = function () {
 var uid = "";
 var access_token = "A";
 var _token = "0"
-var pl_url = `https://api.spotify.com/v1/users/${uid}/playlists`
-var sg_url = `https://api.spotify.com/v1/users/${uid}/playlists/tracks`
+var pl_url = 'https://api.spotify.com/v1/users/'+uid+'/playlists'
+var sg_url = 'https://api.spotify.com/v1/users/'+uid+'/playlists/tracks'
 
 function updateUID(){
 	document.getElementById("uid").value = uid;
