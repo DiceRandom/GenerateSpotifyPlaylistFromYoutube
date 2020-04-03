@@ -23,22 +23,6 @@ function updateInfo(){
 	window.localStorage.setItem('pDescription', pDescription);
 }
 
-function addSong(){
-
-	$.ajax(sg_url,{
-	   
-		method: "POST",
-		data: JSON.stringify({name: "YT 2 SP", description: "Your New Playlist Awaits", public: false}),
-		headers: {
-		  'Authorization': 'Bearer ' + _token,
-		  'Content-Type': 'application/json',
-		  'Accept': 'application/json'
-		},
-		success: function(response) {
-		  console.log(response);
-		}
-	  });
-}
 
 
 function create_playlist(token){
