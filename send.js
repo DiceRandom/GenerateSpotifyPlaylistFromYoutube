@@ -1,14 +1,38 @@
 window.onload = function () {
 var uid = "";
 var access_token = "A";
-var url = 'https://api.spotify.com/v1/users//playlists'
+var _token = "0"
+var pl_url = `https://api.spotify.com/v1/users/${uid}/playlists`
+var sg_url = `https://api.spotify.com/v1/users/${uid}/playlists/tracks`
+
+function updateUID(){
+	document.getElementById("uid").value = uid;
+}
+
+function addSong(){
+
+	$.ajax(sg_url,{
+	   
+		method: "POST",
+		data: JSON.stringify({name: "YT 2 SP", description: "Your New Playlist Awaits", public: false}),
+		headers: {
+		  'Authorization': 'Bearer ' + _token,
+		  'Content-Type': 'application/json',
+		  'Accept': 'application/json'
+		},
+		success: function(response) {
+		  console.log(response);
+		}
+	  });
+}
+
 
 function create_playlist(token){
 
 
+	_token = token;
 
-
-	$.ajax(url,{
+	$.ajax(pl_url,{
 	   
 	   method: "POST",
 	   data: JSON.stringify({name: "YT 2 SP", description: "Your New Playlist Awaits", public: false}),
