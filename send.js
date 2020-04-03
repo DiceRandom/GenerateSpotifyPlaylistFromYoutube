@@ -5,8 +5,11 @@ var pl_url = 'https://api.spotify.com/v1/users/'+uid+'/playlists'
 var sg_url = 'https://api.spotify.com/v1/users/'+uid+'/playlists/tracks'
 
 
+
 function updateUID(){
 	uid = document.getElementById("uid").value;
+	window.localStorage.setItem('uid', uid);
+	console.log(window.localStorage.getItem('uid'));
 	console.log(uid);
 }
 
@@ -84,7 +87,7 @@ const app = new Vue({
 
 window.onload = function () {
 	vuez();
-	updateUID();
+	uid = window.localStorage.getItem('uid');
 	pl_url = 'https://api.spotify.com/v1/users/'+uid+'/playlists'
 	sg_url = 'https://api.spotify.com/v1/users/'+uid+'/playlists/tracks'
 }
