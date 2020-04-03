@@ -19,6 +19,8 @@ function updateInfo(){
 	//PLAYLIST INFO
 	pName = document.getElementById("name").value;
 	pDescription = document.getElementById("description").value;
+	window.localStorage.setItem('pName', pName);
+	window.localStorage.setItem('pDescription', pDescription);
 }
 
 function addSong(){
@@ -96,6 +98,8 @@ const app = new Vue({
 
 window.onload = function () {
 	vuez();
+	pName = window.localStorage.getItem('pName');
+	pDescription = window.localStorage.getItem('pDescription');
 	uid = window.localStorage.getItem('uid');
 	pl_url = 'https://api.spotify.com/v1/users/'+uid+'/playlists'
 	sg_url = 'https://api.spotify.com/v1/users/'+uid+'/playlists/tracks'
