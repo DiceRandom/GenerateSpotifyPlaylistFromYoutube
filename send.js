@@ -1,3 +1,8 @@
+function updateUID(){
+	document.getElementById("uid").value = uid;
+	console.log(uid);
+}
+
 window.onload = function () {
 var uid = "";
 var access_token = "A";
@@ -7,10 +12,6 @@ var sg_url = 'https://api.spotify.com/v1/users/'+uid+'/playlists/tracks'
 
 updateUID();
 
-function updateUID(){
-	document.getElementById("uid").value = uid;
-	console.log(uid);
-}
 
 function addSong(){
 
