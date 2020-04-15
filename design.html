@@ -1,0 +1,110 @@
+<style>
+    html{
+        font-family: 'Arial Bold', sans-serif;
+    }
+    body{
+        padding: 0px;
+        margin: 0 auto;
+    }
+    #uid-div{
+        background-color: black;
+        width: 100%;
+        height: 100%;
+        font-family: 'Arial Bold', sans-serif;
+    }
+    #uid-window{
+        position: relative;
+        vertical-align: middle;
+        background-color: white;
+        margin: auto;
+        top: 25%;
+        width: 500px;
+        height: 400px;
+        border-radius: 15px;
+        text-align: center;
+        
+    }
+    #uid-text{
+        padding: 25% 0;
+    }
+
+
+    #info-window{
+        position: relative;
+        vertical-align: middle;
+        background-color: white;
+        margin: auto;
+        top: 25%;
+        width: 700px;
+        height: 650px;
+        border-radius: 15px;
+        text-align: center;
+        display: none;
+    }
+    #info-text{
+        padding: 40px;
+    }
+
+
+
+    button{
+        background-color: teal;
+        color: white;
+        border: none;
+        width: 120px;
+        height: 30px;
+        border-radius: 15px;  
+        cursor: pointer;
+        font-family: 'Arial Bold', sans-serif;
+    }
+
+    input{
+        background-color: gray;
+        color: white;
+        border: none;
+        width: 250px;
+        height: 30px;
+        padding: 5px;
+        border-radius: 5px;  
+        
+        font-family: 'Arial Bold', sans-serif;
+    }
+    #question{
+        color: black;
+        width: 30px;
+        border: 2px solid #000;
+        font-weight: bold;
+        background-color: white;
+    }
+</style>
+
+<div id="uid-div">
+    <div id="uid-window">
+        <div id=uid-text>
+            User ID
+            <p></p><input id="uid" placeholder="uid"></input> <button id="question" onclick="javascript: show()" >?</button></p> 
+            <button onclick="javascript: updateUID()">Update UID</button>
+        </div>
+    </div>
+
+    <div id="info-window">
+        <div id=info-text>
+            <img src="img/uid-tutorial/1.png" style="width: 600px;"></img>
+            <img src="img/uid-tutorial/2.png" style="width: 600px;"></img>
+            <p><button onclick="javascript: hide()">OK</button></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function show(){
+        document.getElementById("uid-window").style = "display: none;";
+        document.getElementById("info-window").style = "display: block;";
+    }
+
+    function hide(){
+        document.getElementById("uid-window").style = "display: block;";
+        document.getElementById("info-window").style = "display: none;";
+    }   
+
+</script>

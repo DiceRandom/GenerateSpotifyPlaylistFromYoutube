@@ -66,7 +66,7 @@ $(document).ready(function(){
     $.ajax({
         type: 'POST',
         url: "https://www.googleapis.com/oauth2/v4/token",
-        data: {code:code
+        data: {code:"email,profile,openid"
             ,redirect_uri:redirect_uri,
             client_secret:client_secret,
         client_id:client_id,
@@ -80,7 +80,7 @@ $(document).ready(function(){
            localStorage.setItem("refreshToken",resultData.refreshToken);
            localStorage.setItem("expires_in",resultData.expires_in);
            //window.history.pushState({}, document.title, "/GitLoginApp/" + "upload.html");
-           window.history.replaceState({}, document.title, "// replace it with your redirect uri //");
+           window.history.replaceState({}, document.title, "https://dicerandom.github.io/GenerateSpotifyPlaylistFromYoutube/");
            
            
            
