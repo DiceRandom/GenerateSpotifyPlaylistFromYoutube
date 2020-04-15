@@ -1,6 +1,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="send.js"></script>
+<script src="playlist.js"></script>
 
 <input id="uid" placeholder="uid"></input> <button onclick="javascript: updateUID()">Update UID</button>
 <p>&nbsp;</p>
@@ -20,3 +21,29 @@
 
 
 for now it just creates a playlist
+
+
+<body>
+  <div class="container">
+   <h1>Youtube Playlists</h1>  
+  <div class="form-group">
+      <button id="myplaylist" class="btn btn-primary">My Playlist</button>
+      <input type="text" placeholder="username" class="form-control" id="usernamefield"/>
+      <button id="usernamebutton" class="btn btn-primary">Submit</button>
+      <input type="text" placeholder="search" class="form-control" id="search"/>
+      <button id="searchbutton" class="btn btn-primary">Submit</button>
+  </div>
+  <div id="results1">
+    
+  </div>
+  <div id="results2">
+
+  </div>
+  <div id="results3">
+
+  </div>
+  <div id="results4">
+
+  </div>
+  </div>
+</body>
