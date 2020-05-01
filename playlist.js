@@ -8,6 +8,7 @@ var playlist;
 var channelId;
 var username;
 var search;
+var user;
 var playlistId;
 var API_KEY = "AIzaSyDIWTpw8pkJgGCcRNXbcKoGeJAqSLbnkTY";
 var GoogleAuth;
@@ -66,7 +67,7 @@ function revokeAccess() {
 }
 
 function setSigninStatus(isSignedIn) {
-    var user = GoogleAuth.currentUser.get();
+    user = GoogleAuth.currentUser.get();
     var isAuthorized = user.hasGrantedScopes(SCOPE);
     if (isAuthorized) {
         $('#sign-in-or-out-button').html('Sign out');
