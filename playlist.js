@@ -1,11 +1,8 @@
-$(document).ready(function(){
-    
- 
-    const urlParams = new URLSearchParams(window.location.search);
+const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
     const redirect_uri = "https://dicerandom.github.io/GenerateSpotifyPlaylistFromYoutube/" // replace with your redirect_uri;
-    const client_secret = "963512865159-v2ji3fhpfpmcbfusv0uf0n7bvhkg0d1h.apps.googleusercontent.com"; // replace with your client secret
-    const scope = "https://www.googleapis.com/auth/youtube";
+    const CLIENT_SECRET = "963512865159-v2ji3fhpfpmcbfusv0uf0n7bvhkg0d1h.apps.googleusercontent.com"; // replace with your client secret
+    const SCOPE = "https://www.googleapis.com/auth/youtube";
     var client_id = "963512865159-v2ji3fhpfpmcbfusv0uf0n7bvhkg0d1h.apps.googleusercontent.com";// replace it with your client id
     var playlist;
     var channelId;
@@ -13,310 +10,77 @@ $(document).ready(function(){
     var search;
     var playlistId;
     var API_KEY = "AIzaSyDIWTpw8pkJgGCcRNXbcKoGeJAqSLbnkTY";
-
-    $("#myplaylist").hide();
-
-    $("#myplaylist").click(function(){
-       
-        empty();
-
-        getMyPlaylists();
-
-    });
-
-    $("#buttonid").click(function(){
-
-        $("#myplaylist").show();
-
-        empty();
-
-        channelId = $("#channelId").val();
-
-        getChannelPlaylist(channelId);
-
-
-    });
-
-    $("#usernamebutton").click(function(){
-
-        $("#myplaylist").show();
-        
-        empty();
-
-        username = $("#usernamefield").val();
-
-        getChannelPlaylistByUserName(username);
-
-
-    });
-
-    $("#searchbutton").click(function(){
-
-        $("#myplaylist").show();
-
-        empty();
-
-        search = $("#search").val();
-
-        getChannelPlaylistBySearch(search);
-
-    });
-
- 
-    $.ajax({
-        type: 'POST',
-        url: "https://www.googleapis.com/oauth2/v4/token",
-        data: {code:"email,profile,openid"
-            ,redirect_uri:redirect_uri,
-            client_secret:client_secret,
-        client_id:client_id,
-        scope:scope,
-        grant_type:"authorization_code"},
-        dataType: "json",
-        success: function(resultData) {
-           
-            
-           localStorage.setItem("accessToken",resultData.access_token);
-           localStorage.setItem("refreshToken",resultData.refreshToken);
-           localStorage.setItem("expires_in",resultData.expires_in);
-           //window.history.pushState({}, document.title, "/GitLoginApp/" + "upload.html");
-           window.history.replaceState({}, document.title, "https://dicerandom.github.io/GenerateSpotifyPlaylistFromYoutube/");
-           
-           
-           
-           
-        }
-  });
-
-    getMyPlaylists();
- 
-    function stripQueryStringAndHashFromPath(url) {
-        return url.split("?")[0].split("#")[0];
-    }   
-       
-    
-    function getMyPlaylists()
-
-    {
-    
-        $.ajax({
-            type: "GET",
-            beforeSend: function(request) {
-                request.setRequestHeader("Authorization", "Bearer" + " " + localStorage.getItem("accessToken"));
-                
-            },
-            url:"https://www.googleapis.com/youtube/v3/playlists?part=snippet&mine=true&maxResults=25&key="+API_KEY+"&access_token=Bearer"+ " "+localStorage.getItem("accessToken"),
-
-            success: function (data) {
-
-                console.log(data);
-
-                //nextPageToken = data.nextPageToken;
-
-
-
-                //$("#results").append(data.items.snippet.channelTitle
-               
-                data.items.forEach(item => {
-                   playlist = `
-                   <div style="text-align:center;">     
-                        <li>
-                        <h1>${item.snippet.title}</h1>
-                        <img src="${item.snippet.thumbnails.medium.url}" class="img-rounded">
-                        <h3>${item.snippet.description}</h3>
-                        <a href="https://www.youtube.com/playlist?list=${item.id}" target="_blank">Go To Playlist</a>
-                        </li>
-                   </div>     
-                        `;
-                   $("#results1").append(playlist); 
-                });
-
-            
-
-            },
-            error: function (error) {
-                console.log(error);
-            },
-            
+    var GoogleAuth;
+    function handleClientLoad() {
+      // Load the API's client and auth2 modules.
+      // Call the initClient function after the modules load.
+      gapi.load('client:auth2', initClient);
+    }
+  
+    function initClient() {
+      // Retrieve the discovery document for version 3 of YouTube Data API.
+      // In practice, your app can retrieve one or more discovery documents.
+      var discoveryUrl = 'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest';
+  
+      // Initialize the gapi.client object, which app uses to make API requests.
+      // Get API key and client ID from API Console.
+      // 'scope' field specifies space-delimited list of access scopes.
+      gapi.client.init({
+          'apiKey': API_KEY,
+          'clientId': CLIENT_SECRET,
+          'discoveryDocs': [discoveryUrl],
+          'scope': SCOPE
+      }).then(function () {
+        GoogleAuth = gapi.auth2.getAuthInstance();
+  
+        // Listen for sign-in state changes.
+        GoogleAuth.isSignedIn.listen(updateSigninStatus);
+  
+        // Handle initial sign-in state. (Determine if user is already signed in.)
+        var user = GoogleAuth.currentUser.get();
+        setSigninStatus();
+  
+        // Call handleAuthClick function when user clicks on
+        //      "Sign In/Authorize" button.
+        $('#sign-in-or-out-button').click(function() {
+          handleAuthClick();
         });
-    
-    }
-
-
-
-
-    function getChannelPlaylist(channelId)
-    {
-
-        $.ajax({
-            type: "GET",
-            beforeSend: function(request) {
-                request.setRequestHeader("Authorization", "Bearer" + " " + localStorage.getItem("accessToken"));
-                
-            },
-            url: "https://www.googleapis.com/youtube/v3/playlists?part=snippet&maxResults=25&channelId="+channelId+"&access_token=Bearer"+ " "+localStorage.getItem("accessToken"),
-
-            success: function (data) {
-
-                console.log(data);
-
-                //$("#results").append(data.items.snippet.channelTitle);
-               
-                data.items.forEach(item => {
-                   playlist = `
-                   <div style="text-align:center;">     
-                        <li>
-                        <h1>${item.snippet.title}</h1>
-                        <img src="${item.snippet.thumbnails.medium.url}" class="img-rounded">
-                        <h3>${item.snippet.description}</h3>
-                        <a href="https://www.youtube.com/playlist?list=${item.id}" target="_blank">Go To Playlist</a>
-                        </li>
-                   </div>     
-                        `;
-                   $("#results2").append(playlist); 
-                });
-
-
-            },
-            error: function (error) {
-                console.log(error);
-            },
-            
+        $('#revoke-access-button').click(function() {
+          revokeAccess();
         });
-    
-
+      });
     }
-
-    function getChannelPlaylistByUserName(username)
-    {
-        $.ajax({
-            type: "GET",
-            beforeSend: function(request) {
-                request.setRequestHeader("Authorization", "Bearer" + " " + localStorage.getItem("accessToken"));
-                
-            },
-            url: "https://www.googleapis.com/youtube/v3/channels?part=snippet,contentDetails"+"&maxResults=25&forUsername="+username+"&access_token=Bearer"+ " "+localStorage.getItem("accessToken"),
-
-            success: function (data) {
-
-                console.log(data);
-
-                channelId = data.items[0].id;
-
-                getChannelPlaylistIdUserName(channelId);
-
-                //$("#results").append(data.items.snippet.channelTitle);
-
-            },
-            error: function (error) {
-                console.log(error);
-            },
-            
-        });
-    
+  
+    function handleAuthClick() {
+      if (GoogleAuth.isSignedIn.get()) {
+        // User is authorized and has clicked "Sign out" button.
+        GoogleAuth.signOut();
+      } else {
+        // User is not signed in. Start Google auth flow.
+        GoogleAuth.signIn();
+      }
     }
-
-    function getChannelPlaylistBySearch(search)
-
-    {
-
-        $.ajax({
-            type: "GET",
-
-            beforeSend: function(request) {
-                request.setRequestHeader("Authorization", "Bearer" + " " + localStorage.getItem("accessToken"));
-                
-            },
-            
-            url: "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q="+search+"&type=playlist",
-
-            success: function (data) {
-
-                console.log(data);
-
-                data.items.forEach(item => {
-                   
-                    playlistId = item.id.playlistId;
-
-                    playlist = `
-                   <div style="text-align:center;">     
-                        <li>
-                        <h1>${item.snippet.title}</h1>
-                        <img src="${item.snippet.thumbnails.medium.url}" class="img-rounded">
-                        <h3>${item.snippet.description}</h3>
-                        <a href="https://www.youtube.com/playlist?list={playlistId}" target="_blank">Go To Playlist</a>
-                        </li>
-                   </div>     
-                        `;
-
-                   $("#results4").append(playlist);
-
-                    
-                    
-                });
-
-                //$("#results").append(data.items.snippet.channelTitle);
-
-            },
-            error: function (error) {
-                console.log(error);
-            },
-            
-        });
-
-
+  
+    function revokeAccess() {
+      GoogleAuth.disconnect();
     }
-
-    function getChannelPlaylistIdUserName(channelId)
-
-    {
-        $.ajax({
-            type: "GET",
-            beforeSend: function(request) {
-                request.setRequestHeader("Authorization", "Bearer" + " " + localStorage.getItem("accessToken"));
-                
-            },
-            url: "https://www.googleapis.com/youtube/v3/playlists?part=snippet&maxResults=25&channelId="+channelId+"&access_token=Bearer"+ " "+localStorage.getItem("accessToken"),
-
-            success: function (data) {
-
-                console.log(data);
-
-                //$("#results").append(data.items.snippet.channelTitle);
-               
-                data.items.forEach(item => {
-                   playlist = `
-                   <div style="text-align:center;">     
-                        <li>
-                        <h1>${item.snippet.title}</h1>
-                        <img src="${item.snippet.thumbnails.medium.url}" class="img-rounded">
-                        <h3>${item.snippet.description}</h3>
-                        <a href="https://www.youtube.com/playlist?list=${item.id}" target="_blank">Go To Playlist</a>
-                        </li>
-                   </div>     
-                        `;
-                   $("#results3").append(playlist); 
-                });
-
-
-            },
-            error: function (error) {
-                console.log(error);
-            },
-            
-        });
-    
-
+  
+    function setSigninStatus(isSignedIn) {
+      var user = GoogleAuth.currentUser.get();
+      var isAuthorized = user.hasGrantedScopes(SCOPE);
+      if (isAuthorized) {
+        $('#sign-in-or-out-button').html('Sign out');
+        $('#revoke-access-button').css('display', 'inline-block');
+        $('#auth-status').html('You are currently signed in and have granted ' +
+            'access to this app.');
+      } else {
+        $('#sign-in-or-out-button').html('Sign In/Authorize');
+        $('#revoke-access-button').css('display', 'none');
+        $('#auth-status').html('You have not authorized this app or you are ' +
+            'signed out.');
+      }
     }
-
-    function empty()
-    {
-        $("#results1").empty();
-        $("#results2").empty();
-        $("#results3").empty();
-        $("#results4").empty();
+  
+    function updateSigninStatus(isSignedIn) {
+      setSigninStatus();
     }
- 
- 
-    
-})
