@@ -48,6 +48,8 @@ function initClient() {
         });
         $('#revoke-access-button').click(function () {
             revokeAccess();
+
+            
         });
     });
 }
@@ -67,6 +69,9 @@ function revokeAccess() {
 }
 
 function setSigninStatus(isSignedIn){
+
+    
+    
     user = GoogleAuth.currentUser.get();
     var isAuthorized = user.hasGrantedScopes(SCOPE);
     if (isAuthorized) {
@@ -102,13 +107,13 @@ function getPlaylist() {
 }
 
 function getCID(){
-    return GoogleAuth.client.youtube.channels.list({
-        "part": "id",
-        "mine": true
-    })
-        .then(function (response) {
-            // Handle the results here (response.result has the parsed body).
-            console.log("Response", response);
-        },
-            function (err) { console.error("Execute error", err); });
+    var request = GoogleAuth.client.request({
+        'method': 'GET',
+        'path': '/youtube/v3/channels',
+        'params': {'part': 'snippet', 'mine': 'true'}
+      });
+      // Execute the API request.
+      request.execute(function(response) {
+        console.log(response);
+      });
 }
