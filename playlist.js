@@ -101,7 +101,7 @@ function getPlaylist() {
 }
 
 function getCID(){
-    return gapi.client.youtube.channels.list({
+    return GoogleAuth.client.youtube.channels.list({
         "part": "id",
         "mine": true
     })
