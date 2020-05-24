@@ -1,3 +1,2 @@
-# GenerateSpotifyPlaylistFromYoutube
-Generate a Spotify Playlist from a Youtube Playlist
+# In development. Does not work yet.
 https://dicerandom.github.io/GenerateSpotifyPlaylistFromYoutube
