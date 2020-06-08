@@ -38,7 +38,7 @@ function initClient() {
         GoogleAuth.isSignedIn.listen(updateSigninStatus);
 
         // Handle initial sign-in state. (Determine if user is already signed in.)
-     user = GoogleAuth.currentUser.get();
+        user = GoogleAuth.currentUser.get();
         setSigninStatus();
 
         // Call handleAuthClick function when user clicks on
@@ -49,7 +49,7 @@ function initClient() {
         $('#revoke-access-button').click(function () {
             revokeAccess();
 
-            
+
         });
     });
 }
@@ -68,19 +68,19 @@ function revokeAccess() {
     GoogleAuth.disconnect();
 }
 
-function setSigninStatus(isSignedIn){
+function setSigninStatus(isSignedIn) {
 
-    
-    
+
+
     user = GoogleAuth.currentUser.get();
     var isAuthorized = user.hasGrantedScopes(SCOPE);
     if (isAuthorized) {
         $('#sign-in-or-out-button').html('Sign out!');
+        getCID();
         $('#revoke-access-button').css('display', 'inline-block');
         $('#auth-status').html('You are currently signed in and have granted ' +
             'access to this app.');
     } else {
-        getPlaylist();
         $('#sign-in-or-out-button').html('Sign In/Authorize');
         $('#revoke-access-button').css('display', 'none');
         $('#auth-status').html('You have not authorized this app or you are ' +
@@ -96,8 +96,8 @@ function updateSigninStatus(isSignedIn) {
 function getPlaylist() {
     return gapi.client.youtube.playlists.list({
         "part": "snippet,contentDetails",
-        "channelId": "UC_x5XG1OV2P6uZZ5FSM9Ttw",
-        "maxResults": 25
+        "channelId": response.items[0].id,
+        "maxResults": 50
     })
         .then(function (response) {
             // Handle the results here (response.result has the parsed body).
@@ -107,14 +107,16 @@ function getPlaylist() {
 
 }
 
-function getCID(){
+function getCID() {
     var request = gapi.client.request({
         'method': 'GET',
         'path': '/youtube/v3/channels',
-        'params': {'part': 'snippet', 'mine': 'true'}
-      });
-      // Execute the API request.
-      request.execute(function(response) {
-        console.log(response);
-      });
+        'params': { 'part': 'snippet', 'mine': 'true' }
+    });
+    // Execute the API request.
+    request.execute(function (response) {
+        console.log(response.items[0].id);
+        channelId = response.items[0].id;
+        getPlaylist();
+    });
 }
