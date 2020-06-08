@@ -80,6 +80,7 @@ function setSigninStatus(isSignedIn){
         $('#auth-status').html('You are currently signed in and have granted ' +
             'access to this app.');
     } else {
+        getPlaylist();
         $('#sign-in-or-out-button').html('Sign In/Authorize');
         $('#revoke-access-button').css('display', 'none');
         $('#auth-status').html('You have not authorized this app or you are ' +
@@ -93,7 +94,7 @@ function updateSigninStatus(isSignedIn) {
 
 
 function getPlaylist() {
-    return GoogleAuth.client.youtube.playlists.list({
+    return gapi.client.youtube.playlists.list({
         "part": "snippet,contentDetails",
         "channelId": "UC_x5XG1OV2P6uZZ5FSM9Ttw",
         "maxResults": 25
@@ -107,7 +108,7 @@ function getPlaylist() {
 }
 
 function getCID(){
-    var request = GoogleAuth.client.request({
+    var request = gapi.client.request({
         'method': 'GET',
         'path': '/youtube/v3/channels',
         'params': {'part': 'snippet', 'mine': 'true'}
