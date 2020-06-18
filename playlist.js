@@ -109,6 +109,7 @@ function getPlaylist() {
 
 function createElements(){
     for (let i = 0; i < playlists.length; i++) {
+        playlistBlock = document.getElementById("playlists");
         var playlistDiv = document.createElement("div");
         var playlistImg = document.createElement("img");
         var playlistTitle = document.createElement("span");
@@ -117,17 +118,15 @@ function createElements(){
         playlistImg.className = "playlistImage";
 
         playlistTitle.innerHTML = playlists[i].snippet.title;
-        playlistImg.className = "playlistTitle";
+        playlistTitle.className = "playlistTitle";
 
         playlistDiv.id = "Playlist-"+playlists[i].id;
 
         playlistDiv.appendChild(playlistImg);
         playlistDiv.appendChild(playlistTitle);
-        document.body.appendChild(playlistDiv);  
-        
+        playlistBlock.appendChild(playlistDiv);   
     }
 }
-
 
 
 
