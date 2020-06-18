@@ -108,7 +108,14 @@ function getPlaylist() {
 }
 
 function createElements(){
-    
+       // Create a <button> element
+       
+    var playlistDiv = document.createElement("div");
+    for (let i = 0; i <= playlists.length; i++) {
+        var playlistImg = document.createElement("img");
+        playlistImg.src = playlists[i].snippet.thumbnails.high.url;
+        playlistDiv.appendChild(playlistImg); 
+    }
 }
 
 
