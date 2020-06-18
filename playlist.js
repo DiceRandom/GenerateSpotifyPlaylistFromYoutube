@@ -108,13 +108,23 @@ function getPlaylist() {
 }
 
 function createElements(){
-       // Create a <button> element
-       
-    var playlistDiv = document.createElement("div");
-    for (let i = 0; i <= playlists.length; i++) {
+    for (let i = 0; i < playlists.length; i++) {
+        var playlistDiv = document.createElement("div");
         var playlistImg = document.createElement("img");
+        var playlistTitle = document.createElement("span");
+
         playlistImg.src = playlists[i].snippet.thumbnails.high.url;
-        playlistDiv.appendChild(playlistImg); 
+        playlistImg.className = "playlistImage";
+
+        playlistTitle.innerHTML = playlists[i].snippet.title;
+        playlistImg.className = "playlistTitle";
+
+        playlistDiv.id = "Playlist-"+playlists[i].id;
+
+        playlistDiv.appendChild(playlistImg);
+        playlistDiv.appendChild(playlistTitle);
+        document.body.appendChild(playlistDiv);  
+        
     }
 }
 

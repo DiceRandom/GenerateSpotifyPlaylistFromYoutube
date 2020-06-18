@@ -43,10 +43,23 @@ for now it just creates a playlist
 
 
 
-<div id="playlists">
-  <div id="playlist-A">
-    <img src="https://i.ytimg.com/vi/fG-TYyoWin8/hqdefault.jpg" id="playlistImage-A" style="width: 10%;" class="playlistImage">
+  <div id="playlists">
+    <div id="playlist-A">
+      <img src="https://i.ytimg.com/vi/fG-TYyoWin8/hqdefault.jpg" id="playlistImage-A" style="width: 10%;"
+        class="playlistImage">
 
-    <span style="display: inline-block;/* top: 50%; */transform: translate(0, -300%);">TITLE</span>
+      <span class="playlistTitle" style="">TITLE</span>
+    </div>
   </div>
-</div>
+
+  <style>
+    .playlistImage {
+      width: 10%;
+    }
+
+    .playlistTitle {
+      display: inline-block;
+      /* top: 50%; */
+      transform: translate(0, -300%);
+    }
+  </style>
