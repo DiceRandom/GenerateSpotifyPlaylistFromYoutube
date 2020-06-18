@@ -108,6 +108,22 @@ function getPlaylist() {
 }
 
 
+function getVideosInPlaylist(playlistID){
+    gapi.client.load('youtube', 'v3').then(function (){
+        gapi.client.youtube.playlistItems.list ({
+          playlistId: playlistID,
+          maxResults: 50,
+          part: 'snippet'
+        }).then (function(response){
+          return response.result.items;
+          },function(reason){
+            console.log(reason);
+          });
+      });
+}
+
+
+
 // onclick="location.href='http://www.example.com';" style="cursor:pointer;"
 
 

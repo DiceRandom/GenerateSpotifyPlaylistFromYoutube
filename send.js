@@ -1,8 +1,9 @@
 var uid = "";
+var playlistID;
 var access_token = "A";
 var _token = "0"
 var pl_url = 'https://api.spotify.com/v1/users/'+uid+'/playlists'
-var sg_url = 'https://api.spotify.com/v1/users/'+uid+'/playlists/tracks'
+var sg_url = 'https://api.spotify.com/v1/playlists/'+playlistID+'/tracks'
 var pName = "YT 2 SP";
 var pDescription = "Your New Playlist Awaits";
 
@@ -22,6 +23,10 @@ function updateInfo(){
 	window.localStorage.setItem('pName', pName);
 	window.localStorage.setItem('pDescription', pDescription);
 }
+
+
+
+
 
 
 
@@ -88,4 +93,3 @@ window.onload = function () {
 	pl_url = 'https://api.spotify.com/v1/users/'+uid+'/playlists'
 	sg_url = 'https://api.spotify.com/v1/users/'+uid+'/playlists/tracks'
 }
-
