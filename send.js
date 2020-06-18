@@ -8,7 +8,6 @@ var pName = "YT 2 SP";
 var pDescription = "Your New Playlist Awaits";
 
 
-
 function updateUID(){
 	uid = document.getElementById("uid").value;
 	window.localStorage.setItem('uid', uid);
@@ -31,8 +30,6 @@ function updateInfo(){
 
 
 function create_playlist(token){
-
-
 	_token = token;
 
 	$.ajax(pl_url,{
@@ -45,12 +42,60 @@ function create_playlist(token){
 	     'Accept': 'application/json'
 	   },
 	   success: function(response) {
-	     console.log(response);
+		 console.log(response);
+		 playlistID = response.id;
 	   }
 	 });
 
+}
+
+
+function addSong(token){
+	$.ajax(sg_url,{
+	   
+	   method: "POST",
+	   data:JSON.stringify( {uris: ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh","spotify:track:1301WleyT98MSxVHPZCA6M", "spotify:episode:512ojhOuo1ktJprKbVcKyQ"]}),
+	   headers: {
+	     'Authorization': 'Bearer ' + window.localStorage.getItem('token'),
+	     'Content-Type': 'application/json',
+	     'Accept': 'application/json'
+	   },
+	   success: function(response) {
+		 console.log(response);
+	   }
+	 });
+}
+
+var spotifyIDs,songs = []
+function getSongsLoop(){
+	for (let i = 0; i < titles.length; i++) {
+		getSong(turnSpaceToPercent(titles[i]));
+    }
+}
+
+function getSong(songName){
+	$.ajax("https://api.spotify.com/v1/search?q="+songName+"&type=track&offset=20&limit=2" ,{
+	   
+	   method: "GET",
+	   headers: {
+	     'Authorization': 'Bearer ' + window.localStorage.getItem('token'),
+	     'Content-Type': 'application/json',
+	     'Accept': 'application/json'
+	   },
+	   success: function(response) {
+		 songs = response;
+		 spotifyIDs[0] = songs.tracks.items[0].uri;
+		 console.log(response);
+	   }
+	 });
 
 }
+
+
+function turnSpaceToPercent(input){
+	return input.replace(/ /g,"%20");
+}
+
 
 
 function vuez(){
@@ -91,5 +136,5 @@ window.onload = function () {
 	pDescription = window.localStorage.getItem('pDescription');
 	uid = window.localStorage.getItem('uid');
 	pl_url = 'https://api.spotify.com/v1/users/'+uid+'/playlists'
-	sg_url = 'https://api.spotify.com/v1/users/'+uid+'/playlists/tracks'
+	sg_url = 'https://api.spotify.com/v1/playlists/'+ playlistID +'/tracks';
 }

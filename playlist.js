@@ -107,6 +107,13 @@ function getPlaylist() {
       });
 }
 
+var arrayOfItems,titles = [];
+// arrayOfItems[0].snippet.title
+function addTitlesToArray(){
+    for (let i = 0; i < arrayOfItems.length; i++) {
+        titles[i] = arrayOfItems[i].snippet.title
+    }
+}
 
 function getVideosInPlaylist(playlistID){
     gapi.client.load('youtube', 'v3').then(function (){
@@ -115,7 +122,8 @@ function getVideosInPlaylist(playlistID){
           maxResults: 50,
           part: 'snippet'
         }).then (function(response){
-          return response.result.items;
+            arrayOfItems =  response.result.items;
+            addTitlesToArray();
           },function(reason){
             console.log(reason);
           });
