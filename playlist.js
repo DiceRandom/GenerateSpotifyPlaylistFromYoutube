@@ -107,6 +107,10 @@ function getPlaylist() {
       });
 }
 
+
+// onclick="location.href='http://www.example.com';" style="cursor:pointer;"
+
+
 function createElements(){
     for (let i = 0; i < playlists.length; i++) {
         playlistBlock = document.getElementById("playlists");
@@ -121,6 +125,8 @@ function createElements(){
         playlistTitle.className = "playlistTitle";
 
         playlistDiv.id = "Playlist-"+playlists[i].id;
+        playlistDiv.onclick = "location.href='http://www.example.com';";
+        playlistDiv.style = "cursor:pointer;"
 
         playlistDiv.appendChild(playlistImg);
         playlistDiv.appendChild(playlistTitle);
