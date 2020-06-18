@@ -4,12 +4,7 @@ const redirect_uri = "https://dicerandom.github.io/GenerateSpotifyPlaylistFromYo
 const CLIENT_SECRET = "963512865159-v2ji3fhpfpmcbfusv0uf0n7bvhkg0d1h.apps.googleusercontent.com"; // replace with your client secret
 const SCOPE = "https://www.googleapis.com/auth/youtube";
 var client_id = "963512865159-v2ji3fhpfpmcbfusv0uf0n7bvhkg0d1h.apps.googleusercontent.com";// replace it with your client id
-var playlist;
-var channelId;
-var username;
-var search;
-var user;
-var playlistId;
+var playlists,channelId,username,search,user, playlistId;
 var API_KEY = "AIzaSyDIWTpw8pkJgGCcRNXbcKoGeJAqSLbnkTY";
 var GoogleAuth;
 function handleClientLoad() {
@@ -94,18 +89,30 @@ function updateSigninStatus(isSignedIn) {
 
 
 function getPlaylist() {
-    return gapi.client.youtube.playlists.list({
-        "part": "snippet,contentDetails",
-        "channelId": response.items[0].id,
-        "maxResults": 50
-    })
-        .then(function (response) {
-            // Handle the results here (response.result has the parsed body).
-            console.log("Response", response);
-        },
-            function (err) { console.error("Execute error", err); });
-
+    gapi.client.setApiKey(
+        API_KEY
+      );
+      gapi.client.load('youtube', 'v3').then(function (){
+        gapi.client.youtube.playlists.list ({
+          channelId: channelId,
+          maxResults: 50,
+          part: 'snippet'
+        }).then (function(response){
+          console.log(response.result);
+          playlists = response.result.items;
+          createElements();
+          },function(reason){
+            console.log(reason);
+          });
+      });
 }
+
+function createElements(){
+    
+}
+
+
+
 
 function getCID() {
     var request = gapi.client.request({
@@ -120,3 +127,6 @@ function getCID() {
         getPlaylist();
     });
 }
+
+
+
