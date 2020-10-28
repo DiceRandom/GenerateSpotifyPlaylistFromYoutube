@@ -2,4 +2,4 @@
 
 ## Introduction
 
-> Ever had a bomb Spotify playlist but you couldn't pay for premium this month. Then this is for you. 
+> Ever had a bomb Youtube playlist but you really want it on spotify. Then this is for you. 
